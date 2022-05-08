@@ -1,3 +1,4 @@
+import string
 import Rectangle
 
 
@@ -6,7 +7,8 @@ class Resistor:
     legRightPosition = ()
     codeBarPosition = []
     codeBarWidth = 0
-    codeBarColor = [
+    codeBarColor = []
+    color = [
         (20, 20, 20),       # Black
         (110, 38, 14),      # Brown
         (204, 0, 0),        # Red
@@ -23,7 +25,7 @@ class Resistor:
 
 
     def __init__(self, specification: tuple, bodyPosition: tuple, bodySize: tuple, bodyColor: tuple, legSize: tuple, legColor: tuple, codeBarCount: int,
-            codeBarBodyClearance: int, codeBarClearance: int) -> None:
+            codeBarClearanceSide: int, codeBarClearance: int) -> None:
 
         self.specification = specification
         self.bodyPosition = bodyPosition
@@ -32,10 +34,11 @@ class Resistor:
         self.legSize = legSize
         self.legColor = legColor
         self.codeBarCount = codeBarCount
-        self.codeBarBodyClearance = codeBarBodyClearance
+        self.codeBarClearanceSide = codeBarClearanceSide
         self.codeBarClearance = codeBarClearance
 
         self.CodeBarPositionCalculate()
+        self.CodeBarColorCalculate()
 
 
     def CodeBarPositionCalculate(self) -> bool:
@@ -44,7 +47,7 @@ class Resistor:
         self.legRightPosition = (self.bodyPosition[0] + self.bodySize[0], self.legLeftPosition[1])
 
         # Determine the code with for each color bar depending which resistor code type is selected
-        self.codeBarWidth = self.bodySize[0] - (2 * self.codeBarBodyClearance)
+        self.codeBarWidth = self.bodySize[0] - (2 * self.codeBarClearanceSide)
         self.codeBarWidth = int((self.codeBarWidth - (self.codeBarCount * self.codeBarClearance)) / self.codeBarCount)
 
         # Check if the resistor bar code width is more than 0
@@ -53,13 +56,31 @@ class Resistor:
             return False
 
         # Calculate resistor bar code positions
-        self.codeBarPosition.append((self.bodyPosition[0] + self.codeBarBodyClearance, self.bodyPosition[1]))
+        self.codeBarPosition.append((self.bodyPosition[0] + self.codeBarClearanceSide, self.bodyPosition[1]))
 
         for counter in range(self.codeBarCount - 2):
             self.codeBarPosition.append((self.codeBarPosition[counter][0] + self.codeBarWidth + self.codeBarClearance, self.bodyPosition[1]))
 
         self.codeBarPosition.append((self.codeBarPosition[counter + 1][0] + self.codeBarWidth + 2 * self.codeBarClearance, self.bodyPosition[1]))
         return True
+
+
+    def CodeBarColorCalculate(self) -> None:
+        # Convert resistor value to a string
+        specificationValueString = str(self.specification[0])
+
+        # TODO
+
+        # Calculate digits
+        for counter in range(self.codeBarCount - 2):
+            self.codeBarColor.append(0);
+
+        value = self.specification[0]
+
+        while value >= 10:
+            value /= 10
+
+        print(self.codeBarColor)
 
 
     def Draw(self, image: list, imageSize: tuple) -> None:
@@ -69,4 +90,4 @@ class Resistor:
         Rectangle.Draw(image, imageSize, self.legRightPosition, self.legSize, self.legColor)
 
         for counter in range(self.codeBarPosition.__len__()):
-            Rectangle.Draw(image, imageSize, self.codeBarPosition[counter], (self.codeBarWidth, self.bodySize[1]), self.codeBarColor[counter])
+            Rectangle.Draw(image, imageSize, self.codeBarPosition[counter], (self.codeBarWidth, self.bodySize[1]), self.color[counter])

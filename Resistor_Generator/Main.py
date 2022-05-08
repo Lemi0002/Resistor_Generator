@@ -14,11 +14,11 @@ resistorLegSize = (5, 3)
 resistorLegColor = (50, 50, 50)
 backgroundColor = (255, 255, 255)
 resistorCodeBarCount = 12
-resistorCodeBarBodyClearance = 2
+resistorCodeBarClearanceSide = 2
 resistorCodeBarClearance = 1
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor, resistorCodeBarCount,
-    resistorCodeBarBodyClearance, resistorCodeBarClearance)
+    resistorCodeBarClearanceSide, resistorCodeBarClearance)
 
 # Generate image list
 for counter in range(imageSize[0] * imageSize[1]):
