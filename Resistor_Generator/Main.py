@@ -5,7 +5,7 @@ image = []
 imageSize = (52, 9)
 
 # Resistor Specification: Value in Ohm, tolerance in percentage
-resistorSpecification = (1200, 5)
+resistorSpecification = (547, 5)
 
 resistorBodyPosition = (6, 1)
 resistorBodySize = (40, 7)
@@ -13,9 +13,9 @@ resistorBodyColor = (100, 204, 180)
 resistorLegSize = (5, 3)
 resistorLegColor = (50, 50, 50)
 backgroundColor = (255, 255, 255)
-resistorCodeBarCount = 12
+resistorCodeBarCount = 5
 resistorCodeBarClearanceSide = 2
-resistorCodeBarClearance = 1
+resistorCodeBarClearance = 4
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor, resistorCodeBarCount,
     resistorCodeBarClearanceSide, resistorCodeBarClearance)
