@@ -2,20 +2,20 @@ import png
 import Resistor
 
 image = []
-imageSize = (52, 9)
+imageSize = (42, 9)
 
 # Resistor Specification: Value in Ohm, tolerance in percentage
-resistorSpecification = (547, 5)
+resistorSpecification = (12, 5)
 
 resistorBodyPosition = (6, 1)
-resistorBodySize = (40, 7)
+resistorBodySize = (30, 7)
 resistorBodyColor = (100, 204, 180)
 resistorLegSize = (5, 3)
 resistorLegColor = (50, 50, 50)
 backgroundColor = (255, 255, 255)
 resistorCodeBarCount = 5
 resistorCodeBarClearanceSide = 2
-resistorCodeBarClearance = 4
+resistorCodeBarClearance = 2
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor, resistorCodeBarCount,
     resistorCodeBarClearanceSide, resistorCodeBarClearance)
