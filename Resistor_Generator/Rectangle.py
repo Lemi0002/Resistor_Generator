@@ -1,4 +1,4 @@
-def Draw(image: list, imageSize: tuple, rectanglePosition: tuple, rectangleSize: tuple, rectangleColor: tuple) -> bool:
+def draw(image: list, imageSize: tuple, rectanglePosition: tuple, rectangleSize: tuple, rectangleColor: tuple) -> bool:
     if imageSize.__len__() < 2 or rectanglePosition.__len__() < 2 or rectangleSize.__len__() < 2:
         print("ERROR: Not correct tuple format")
         print("-> Inserted size and position tuples must be two dimensional")

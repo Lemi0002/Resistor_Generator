@@ -16,6 +16,7 @@ color = [
     (218, 165, 32)      # Gold
 ]
 
+
 toleranceColor = [
     (10, color[10]),
     (5, color[11]),
@@ -57,33 +58,33 @@ class Resistor:
             print("-> This number must be greather than 2 to work correctly")
             return
 
-        self.__CodeBarPositionCalculate()
-        self.__CodeBarColorCalculate()
+        self.__codeBarPositionCalculate()
+        self.__codeBarColorCalculate()
 
 
-    def Draw(self, image: list, imageSize: tuple) -> None:
+    def draw(self, image: list, imageSize: tuple) -> None:
         if imageSize.__len__() < 2:
             print("ERROR: Not correct tuple format")
             print("-> Inserted size and position tuples must be two dimensional")
             return False
 
         # Draw each rectangle from back to front into the image
-        Rectangle.Draw(image, imageSize, self.bodyPosition, self.bodySize, self.bodyColor)
-        Rectangle.Draw(image, imageSize, self.legLeftPosition, self.legSize, self.legColor)
-        Rectangle.Draw(image, imageSize, self.legRightPosition, self.legSize, self.legColor)
+        Rectangle.draw(image, imageSize, self.bodyPosition, self.bodySize, self.bodyColor)
+        Rectangle.draw(image, imageSize, self.legLeftPosition, self.legSize, self.legColor)
+        Rectangle.draw(image, imageSize, self.legRightPosition, self.legSize, self.legColor)
 
         for counter in range(self.codeBarPosition.__len__()):
-            Rectangle.Draw(image, imageSize, self.codeBarPosition[counter], (self.codeBarWidth, self.bodySize[1]), self.codeBarColor[counter])
+            Rectangle.draw(image, imageSize, self.codeBarPosition[counter], (self.codeBarWidth, self.bodySize[1]), self.codeBarColor[counter])
 
         return True
 
 
-    def __CodeBarPositionCalculate(self) -> bool:
+    def __codeBarPositionCalculate(self) -> bool:
         # Calculate different resistor leg attributes
         self.legLeftPosition = (self.bodyPosition[0] - self.legSize[0], self.bodyPosition[1] + int(self.bodySize[1] / 2) - int(self.legSize[1] / 2))
         self.legRightPosition = (self.bodyPosition[0] + self.bodySize[0], self.legLeftPosition[1])
 
-        # Determine the code with for each color bar depending which resistor
+        # Determine the code with for each color bar depending on which resistor
         # code type is selected
         self.codeBarWidth = self.bodySize[0] - (2 * self.codeBarClearanceSide)
         self.codeBarWidth = int((self.codeBarWidth - (self.codeBarCount * self.codeBarClearance)) / self.codeBarCount)
@@ -100,11 +101,11 @@ class Resistor:
         for counter in range(self.codeBarCount - 2):
             self.codeBarPosition.append((self.codeBarPosition[counter][0] + self.codeBarWidth + self.codeBarClearance, self.bodyPosition[1]))
 
-        self.codeBarPosition.append((self.codeBarPosition[counter + 1][0] + self.codeBarWidth + 2 * self.codeBarClearance, self.bodyPosition[1]))
+        self.codeBarPosition.append((self.bodyPosition[0] + self.bodySize[0] - self.codeBarClearanceSide - self.codeBarWidth , self.bodyPosition[1]))
         return True
 
 
-    def __CodeBarColorCalculate(self) -> None:
+    def __codeBarColorCalculate(self) -> None:
         specificationValue = self.specification[0]
         specificationMultiplier = 0
 
@@ -153,8 +154,6 @@ class Resistor:
             self.codeBarColor[self.codeBarCount - 2] = color[specificationMultiplier]
         else:
             self.codeBarColor[self.codeBarCount - 2] = color[12 + specificationMultiplier]
-
-        # TODO: Correctly determine tolerance color
 
         # Add tolerance bar color
         for counter in range(toleranceColor.__len__()):

@@ -26,7 +26,7 @@ for counter in range(imageSize[0] * imageSize[1]):
     image.append(backgroundColor)
 
 # Draw resistor to image
-resistor.Draw(image, imageSize)
+resistor.draw(image, imageSize)
 
 # Generate png file
 with open('Resistor.png', 'wb') as file:
