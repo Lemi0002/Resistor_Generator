@@ -8,7 +8,21 @@
             "type": "shell",
             "command": "python",
             "args": [
-                "${workspaceFolder}/Resistor_Generator/Main.py"
+                "${workspaceFolder}/Resistor_Generator/Main.py",
+                "--input",
+                "Hoi",
+                "--version",
+                "Hoi",
+                "--help",
+                "Hoi",
+                "-i",
+                "Hoi",
+                "-gugus",
+                "--input",
+                "--input",
+                "Test.tex",
+                "test",
+                "-i"
             ],
             "problemMatcher": []
         }

@@ -17,6 +17,7 @@ The following software versions were used to develop this software:
 * Python: v3.10.4
 
 Versions of python modules:
+
 * pypng: v0.0.21
 
 ## Capabilities

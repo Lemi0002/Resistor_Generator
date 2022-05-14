@@ -1,5 +1,7 @@
+import sys
 import png
 import Resistor
+import ArgumentParser
 
 
 image = []
@@ -7,16 +9,20 @@ imageSize = (41, 9)
 
 # Resistor Specification: Value in Ohm, tolerance in percentage
 resistorSpecification = (12, 10)
-
 resistorBodyPosition = (6, 1)
 resistorBodySize = (29, 7)
 resistorBodyColor = (100, 204, 180)
 resistorLegSize = (5, 3)
 resistorLegColor = (50, 50, 50)
-backgroundColor = (255, 255, 255)
 resistorCodeBarCount = 5
 resistorCodeBarClearanceSide = 2
 resistorCodeBarClearance = 2
+backgroundColor = (255, 255, 255)
+
+# Parse all arguments and check if all flags have the correct amount of
+# arguments
+if ArgumentParser.parse(sys.argv) == False:
+    quit()
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor,
     resistorCodeBarCount, resistorCodeBarClearanceSide, resistorCodeBarClearance)

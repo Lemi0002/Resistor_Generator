@@ -15,8 +15,6 @@ color = [
     (192, 192, 192),    # Silver
     (218, 165, 32)      # Gold
 ]
-
-
 toleranceColor = [
     (10, color[10]),
     (5, color[11]),
