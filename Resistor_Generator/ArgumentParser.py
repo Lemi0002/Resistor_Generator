@@ -13,7 +13,7 @@ argumentFlags = [
 ]
 
 
-def parse(arguments: list) -> None:
+def parse(arguments: list) -> bool:
     returnValue = True
 
     # Determine the specific flag number of each flag

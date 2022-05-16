@@ -2,6 +2,7 @@ import sys
 import png
 import Resistor
 import ArgumentParser
+import Parser
 
 
 image = []
@@ -18,6 +19,9 @@ resistorCodeBarCount = 5
 resistorCodeBarClearanceSide = 2
 resistorCodeBarClearance = 2
 backgroundColor = (255, 255, 255)
+
+parser = Parser.Parser("_RG_", "::", "_", None)
+parser.stringParse("Hello_RG_::There::::You::_World")
 
 # Parse all arguments and check if all flags have the correct amount of
 # arguments
