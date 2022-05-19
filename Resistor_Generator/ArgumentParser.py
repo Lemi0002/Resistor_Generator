@@ -53,6 +53,6 @@ def parse(arguments: list) -> bool:
         print("-> Use correct flag and argument format")
         returnValue = False
 
-    # TODO: Detect redundant arguments and trow an error
+    # TODO: Detect redundant arguments and throw an error
 
     return returnValue

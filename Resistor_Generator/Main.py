@@ -3,6 +3,7 @@ import png
 import Resistor
 import ArgumentParser
 import Parser
+import ParserCallback
 
 
 image = []
@@ -19,14 +20,24 @@ resistorCodeBarCount = 5
 resistorCodeBarClearanceSide = 2
 resistorCodeBarClearance = 2
 backgroundColor = (255, 255, 255)
+argumentFlags = [
+    ("-i", 1, ParserCallback.parserCallbackInput),
+    ("--input", 1, ParserCallback.parserCallbackInput),
+    ("--help", 0, ParserCallback.parserCallbackHelp),
+    ("--version", 0, ParserCallback.parserCallbackVersion)
+]
 
-parser = Parser.Parser("_RG_", "::", "_", None)
-parser.stringParse("Hello_RG_::There::::You::_World")
+parser = Parser.Parser("__", " ", "_", argumentFlags)
+print("String parse")
+parser.stringParse("__--input -i Hoi --version Hoi --help Hoi -i Hoi -gugus --input --input Test.tex test -i -i Hoi HOI HO1 HO2 HO3_")
+# print("Arguments parse")
+# parser.argumentsParse(sys.argv[1:])
 
 # Parse all arguments and check if all flags have the correct amount of
 # arguments
-if ArgumentParser.parse(sys.argv) == False:
-    quit()
+# print("ArgumentParser")
+# if ArgumentParser.parse(sys.argv) == False:
+quit()
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor,
     resistorCodeBarCount, resistorCodeBarClearanceSide, resistorCodeBarClearance)
