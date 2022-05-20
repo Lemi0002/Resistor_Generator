@@ -39,9 +39,7 @@ class Parser:
                     argumentParsed.append(argumentFlagNone)
 
         # Iterate through the created list and check if the specific amount of
-        # arguments follow each flag. Set the callback to None to indicated that
-        # there were not enough arguments for this specific flag and therefore,
-        # the callback will not be called
+        # arguments follow each flag
         flagActive = argumentFlagNone
         flagActiveArgumentCount = flagActive[1]
         flagActiveIndex = 0
@@ -51,7 +49,6 @@ class Parser:
                 print("ERROR: Flag", arguments[flagActiveIndex], "at index", flagActiveIndex, "has", flagActiveArgumentCount, "missing arguments")
                 print("-> Use correct flag and argument format")
                 returnValue = False
-                argumentParsed[flagActiveIndex] = flagActive[:2] + (None,)
 
                 flagActive = argumentParsed[counter]
                 flagActiveArgumentCount = flagActive[1]
@@ -68,13 +65,20 @@ class Parser:
                 print("-> Remove argument")
                 returnValue = False
 
-        # Check if the last flag has enough arguments. If not, set its callback
-        # to None
+        # Check if the last flag has enough arguments
         if flagActiveArgumentCount > 0:
             print("ERROR: Flag", arguments[flagActiveIndex], "at index", flagActiveIndex, "has", flagActiveArgumentCount, "missing arguments")
             print("-> Use correct flag and argument format")
             returnValue = False
-            argumentParsed[flagActiveIndex] = flagActive[:2] + (None,)
+
+        # If no error occurred, call all the available callbacks
+        if returnValue == True:
+            for counter in range(argumentParsed.__len__()):
+                if argumentParsed[counter][2] != None:
+                    if counter + 1 < argumentParsed.__len__():
+                        argumentParsed[counter][2](arguments[counter + 1 : counter + 1 + argumentParsed[counter][1]])
+                    else:
+                        argumentParsed[counter][2]([])
 
         return returnValue
 

@@ -5,7 +5,9 @@ def parserCallbackInput(parameter: list) -> None:
 
 def parserCallbackHelp(parameter: list) -> None:
     print("Parser help callback")
+    print(parameter)
 
 
 def parserCallbackVersion(parameter: list) -> None:
     print("Parser version callback")
+    print(parameter)

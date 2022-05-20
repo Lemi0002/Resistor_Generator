@@ -22,21 +22,14 @@ resistorCodeBarClearance = 2
 backgroundColor = (255, 255, 255)
 argumentFlags = [
     ("-i", 1, ParserCallback.parserCallbackInput),
-    ("--input", 1, ParserCallback.parserCallbackInput),
+    ("--input", 2, ParserCallback.parserCallbackInput),
     ("--help", 0, ParserCallback.parserCallbackHelp),
     ("--version", 0, ParserCallback.parserCallbackVersion)
 ]
 
-parser = Parser.Parser("__", " ", "_", argumentFlags)
+parser = Parser.Parser("", " ", "", argumentFlags)
 print("String parse")
-parser.stringParse("__--input -i Hoi --version Hoi --help Hoi -i Hoi -gugus --input --input Test.tex test -i -i Hoi HOI HO1 HO2 HO3_")
-# print("Arguments parse")
-# parser.argumentsParse(sys.argv[1:])
-
-# Parse all arguments and check if all flags have the correct amount of
-# arguments
-# print("ArgumentParser")
-# if ArgumentParser.parse(sys.argv) == False:
+parser.stringParse("--input HO1 HO2 -i HOU --version --help --help -i HO8 --version")
 quit()
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor,
