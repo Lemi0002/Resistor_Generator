@@ -27,9 +27,9 @@ argumentFlags = [
     ("--version", 0, ParserCallback.parserCallbackVersion)
 ]
 
-parser = Parser.Parser("", " ", "", argumentFlags)
+parser = Parser.Parser("", " ", "", argumentFlags, True)
 print("String parse")
-parser.stringParse("--input HO1 HO2 -i HOU --version --help --help -i HO8 --version")
+parser.stringParse("--input HO1 HO2 -i HOU --version --help --help -i HO8    --version")
 quit()
 
 resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor,
