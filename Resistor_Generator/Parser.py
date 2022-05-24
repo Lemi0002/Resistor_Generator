@@ -17,8 +17,8 @@ class Parser:
         self.emptyArgumentIgnore = emptyArgumentIgnore
 
 
-    def stringParse(self, string: str) -> bool:
-        returnValue, arguments = self.__stringSplit(string)
+    def stringParse(self, string: str, errorEnabled: bool) -> bool:
+        returnValue, arguments = self.__stringSplit(string, errorEnabled)
 
         if returnValue == False:
             return False
@@ -85,7 +85,7 @@ class Parser:
         return returnValue
 
 
-    def __stringSplit(self, string: str) -> Tuple(bool, list):
+    def __stringSplit(self, string: str, errorEnabled: bool) -> Tuple(bool, list):
         indexStart = 0
         indexEnd = string.__len__()
         arguments = []
@@ -95,8 +95,9 @@ class Parser:
             indexStart = string.find(self.stringStart)
 
             if indexStart < 0:
-                print("Error: Start string not found:", self.stringStart)
-                print("-> Use different input string")
+                if errorEnabled == True:
+                    print("Error: Start string not found:", self.stringStart)
+                    print("-> Use different input string")
                 return False, []
 
         # Get the first end string index after the start string
@@ -104,8 +105,9 @@ class Parser:
             indexEnd = string.find(self.stringEnd, indexStart + self.stringStart.__len__())
 
             if indexEnd < 0:
-                print("Error: End string not found:", self.stringEnd)
-                print("-> Use different input string")
+                if errorEnabled == True:
+                    print("Error: End string not found:", self.stringEnd)
+                    print("-> Use different input string")
                 return False, []
 
         # Get every argument between the start and end string

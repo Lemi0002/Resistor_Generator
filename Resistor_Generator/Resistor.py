@@ -50,10 +50,10 @@ class Resistor:
         self.codeBarClearanceSide = codeBarClearanceSide
         self.codeBarClearance = codeBarClearance
 
-        # The code bar with must be greather than 2 so work correctly
+        # The code bar with must be greater than 2 to work correctly
         if self.codeBarCount < 3:
             print("ERROR: Resistor code bar count too small:", self.codeBarCount)
-            print("-> This number must be greather than 2 to work correctly")
+            print("-> This number must be greater than 2 to work correctly")
             return
 
         self.__codeBarPositionCalculate()

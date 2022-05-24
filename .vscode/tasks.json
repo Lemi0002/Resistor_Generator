@@ -10,19 +10,11 @@
             "args": [
                 "${workspaceFolder}/Resistor_Generator/Main.py",
                 "--input",
-                "Hoi",
-                "--version",
-                "Hoi",
-                "--help",
-                "Hoi",
+                "${workspaceFolder}/Test/Test.md",
                 "-i",
-                "Hoi",
-                "-gugus",
-                "--input",
-                "--input",
-                "Test.tex",
-                "test",
-                "-i"
+                "${workspaceFolder}/Test/Test2.md",
+                "--version",
+                "--help",
             ],
             "problemMatcher": []
         }
