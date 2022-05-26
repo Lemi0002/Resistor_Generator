@@ -4,11 +4,18 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build_main",
+            "label": "Resistor_Generator",
             "type": "shell",
             "command": "python",
             "args": [
-                "${workspaceFolder}/Resistor_Generator/Main.py"
+                "${workspaceFolder}/Resistor_Generator/Main.py",
+                "--input",
+                "${workspaceFolder}/Test/Test1.md",
+                "-i",
+                "${workspaceFolder}/Test/Test2.md",
+                // "--outputPathAbsolute",
+                // "${workspaceFolder}/Output",
+                "--help",
             ],
             "problemMatcher": []
         }
