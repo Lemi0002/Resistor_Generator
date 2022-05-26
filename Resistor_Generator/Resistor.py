@@ -1,40 +1,33 @@
 import Rectangle
 
 
-color = [
-    (20, 20, 20),       # Black
-    (110, 38, 14),      # Brown
-    (204, 0, 0),        # Red
-    (255, 128, 0),      # Orange
-    (204, 204, 51),     # Yellow
-    (0, 204, 80),       # Green
-    (0, 0, 204),        # Blue
-    (102, 0, 204),      # Violet
-    (128, 128, 128),    # Grey
-    (230, 230, 230),    # White
-    (192, 192, 192),    # Silver
-    (218, 165, 32)      # Gold
-]
-toleranceColor = [
-    (10, color[10]),
-    (5, color[11]),
-    (2, color[2]),
-    (1, color[1]),
-    (0.5, color[5]),
-    (0.25, color[6]),
-    (0.1, color[7]),
-    (0.05, color[8])
-]
-
-
 class Resistor:
     specificationMultiplierMin = -2
     specificationMultiplierMax = 9
-    legLeftPosition = ()
-    legRightPosition = ()
-    codeBarPosition = []
-    codeBarWidth = 0
-    codeBarColor = []
+    color = [
+        (20, 20, 20),       # Black
+        (110, 38, 14),      # Brown
+        (204, 0, 0),        # Red
+        (255, 128, 0),      # Orange
+        (204, 204, 51),     # Yellow
+        (0, 204, 80),       # Green
+        (0, 0, 204),        # Blue
+        (102, 0, 204),      # Violet
+        (128, 128, 128),    # Grey
+        (230, 230, 230),    # White
+        (192, 192, 192),    # Silver
+        (218, 165, 32)      # Gold
+    ]
+    toleranceColor = [
+        (10, color[10]),
+        (5, color[11]),
+        (2, color[2]),
+        (1, color[1]),
+        (0.5, color[5]),
+        (0.25, color[6]),
+        (0.1, color[7]),
+        (0.05, color[8])
+    ]
 
 
     def __init__(self, specification: tuple, bodyPosition: tuple, bodySize: tuple, bodyColor: tuple, legSize: tuple, legColor: tuple, codeBarCount: int,
@@ -78,6 +71,11 @@ class Resistor:
 
 
     def __codeBarPositionCalculate(self) -> bool:
+        self.codeBarPosition = []
+        self.legLeftPosition = ()
+        self.legRightPosition = ()
+        self.codeBarWidth = 0
+
         # Calculate different resistor leg attributes
         self.legLeftPosition = (self.bodyPosition[0] - self.legSize[0], self.bodyPosition[1] + int(self.bodySize[1] / 2) - int(self.legSize[1] / 2))
         self.legRightPosition = (self.bodyPosition[0] + self.bodySize[0], self.legLeftPosition[1])
@@ -104,6 +102,7 @@ class Resistor:
 
 
     def __codeBarColorCalculate(self) -> None:
+        self.codeBarColor = []
         specificationValue = self.specification[0]
         specificationMultiplier = 0
 
@@ -144,24 +143,24 @@ class Resistor:
 
         # Add code bar colors
         for counter in range(self.codeBarCount - 3, -1, -1):
-            self.codeBarColor[counter] = color[specificationValue % 10]
+            self.codeBarColor[counter] = self.color[specificationValue % 10]
             specificationValue = int(specificationValue / 10)
 
         # Add multiplier bar color
         if specificationMultiplier >= 0:
-            self.codeBarColor[self.codeBarCount - 2] = color[specificationMultiplier]
+            self.codeBarColor[self.codeBarCount - 2] = self.color[specificationMultiplier]
         else:
-            self.codeBarColor[self.codeBarCount - 2] = color[12 + specificationMultiplier]
+            self.codeBarColor[self.codeBarCount - 2] = self.color[12 + specificationMultiplier]
 
         # Add tolerance bar color
-        for counter in range(toleranceColor.__len__()):
-            if self.specification[1] == toleranceColor[counter][0]:
-                self.codeBarColor[self.codeBarCount - 1] = toleranceColor[counter][1]
+        for counter in range(self.toleranceColor.__len__()):
+            if self.specification[1] == self.toleranceColor[counter][0]:
+                self.codeBarColor[self.codeBarCount - 1] = self.toleranceColor[counter][1]
                 break
 
             # Use the biggest resistor tolerance if the tolerance is unknown
-            if counter == toleranceColor.__len__() - 1:
-                self.codeBarColor[self.codeBarCount - 1] = toleranceColor[0][1]
+            if counter == self.toleranceColor.__len__() - 1:
+                self.codeBarColor[self.codeBarCount - 1] = self.toleranceColor[0][1]
 
                 print("WARNING: Resistor tolerance unknown:", self.specification[1])
                 print("-> Insert a valid resistor tolerance")

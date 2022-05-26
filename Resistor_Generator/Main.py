@@ -1,3 +1,4 @@
+import os
 import sys
 import png
 import Resistor
@@ -7,7 +8,9 @@ import Auxillary
 
 inputPath = ""
 inputFileList = []
-outputPath = ""
+inputFileCounter = 0
+outputPathAbsolute = ""
+outputPathRelative = ""
 imageSize = (41, 9)
 resistorBodyPosition = (6, 1)
 resistorBodySize = (29, 7)
@@ -22,6 +25,12 @@ colorMin = 0
 colorMax = 255
 codeBarCountMin = 4
 codeBarCountMax = 5
+
+
+def consoleCallbackOutputPathAbsolute(parameter: list) -> None:
+    global outputPathAbsolute
+
+    outputPathAbsolute = parameter[0]
 
 
 def consoleCallbackInput(parameter: list) -> None:
@@ -43,33 +52,38 @@ def consoleCallbackHelp(parameter: list) -> None:
     print("")
 
 
-def consoleCallbackVersion(parameter: list) -> None:
-    # TODO: Use correct version
-    print("Version: 1.0.0")
-
-
 def fileCallbackSpecification(parameter: list) -> None:
     try:
         image = []
+        outputPath = ""
         resistorSpecification = (Auxillary.toUnsigned(int(parameter[0])), Auxillary.toUnsigned(int(parameter[1])))
         resistor = Resistor.Resistor(resistorSpecification, resistorBodyPosition, resistorBodySize, resistorBodyColor, resistorLegSize, resistorLegColor,
             resistorCodeBarCount, resistorCodeBarClearanceSide, resistorCodeBarClearance)
 
+        # Append an entry in the list for each png pixel
         for counter in range(imageSize[0] * imageSize[1]):
             image.append(backgroundColor)
 
-        # Draw resistor to image
         resistor.draw(image, imageSize)
 
-        # TODO: Generate correct output path
-        imagePngName = "Resistor_" + str(resistorSpecification[0]) + "_" + str(resistorSpecification[1])
-        imagePngPath = outputPath + imagePngName + ".png"
+        # Generate the output path of the png and create the folder structure if
+        # necessary
+        if outputPathAbsolute == "":
+            outputPath = os.path.join(os.path.dirname(inputFileList[inputFileCounter]), outputPathRelative)
+        else:
+            outputPath = outputPathAbsolute
+
+        if not os.path.isdir(outputPath):
+            os.makedirs(outputPath)
+
+        imagePngName = "Resistor_" + str(resistorSpecification[0]) + "_" + str(resistorSpecification[1]) + ".png"
+        imagePngPath = os.path.join(outputPath, imagePngName)
 
         # Generate png file
         try:
+            imagePngList = []
             imagePng = open(imagePngPath, "wb")
 
-            imagePngList = []
             for counterY in range(imageSize[1]):
                 row =  ()
 
@@ -90,10 +104,10 @@ def fileCallbackSpecification(parameter: list) -> None:
         print("-> Change parameter format")
 
 
-def fileCallbackOutputPath(parameter: list) -> None:
-    global outputPath
+def fileCallbackOutputPathRelative(parameter: list) -> None:
+    global outputPathRelative
 
-    outputPath = parameter[0]
+    outputPathRelative = parameter[0]
 
 
 def fileCallbackImageSize(parameter: list) -> None:
@@ -202,12 +216,13 @@ def fileCallbackBackgroundColor(parameter: list) -> None:
 consoleArgumentFlags = [
     ("-i", 1, consoleCallbackInput),
     ("--input", 1, consoleCallbackInput),
+    ("-opa", 1, consoleCallbackOutputPathAbsolute),
+    ("--outputPathAbsolute", 1, consoleCallbackOutputPathAbsolute),
     ("--help", 0, consoleCallbackHelp),
-    ("--version", 0, consoleCallbackVersion)
 ]
 fileArgumentFlags = [
     ("Specification", 2, fileCallbackSpecification),
-    ("OutputPath", 1, fileCallbackOutputPath),
+    ("OutputPathRelative", 1, fileCallbackOutputPathRelative),
     ("ImageSize", 2, fileCallbackImageSize),
     ("BodyPosition", 2, fileCallbackBodyPosition),
     ("BodySize", 2, fileCallbackBodySize),
@@ -223,15 +238,15 @@ fileArgumentFlags = [
 consoleParser = Parser.Parser("", " ", "", consoleArgumentFlags, True)
 fileParser = Parser.Parser("_RG_", ";", "_", fileArgumentFlags, False)
 
-# Execute command line commands or quit the application when something went
+# Execute command line cal or quit the application when something went
 # wrong
 if consoleParser.argumentsParse(sys.argv[1:]) == False:
     quit()
 
 # Iterate through all input files
-for counter in range(inputFileList.__len__()):
+for inputFileCounter in range(inputFileList.__len__()):
     try:
-        inputFile = open(inputFileList[counter], "r")
+        inputFile = open(inputFileList[inputFileCounter], "r")
         inputFileLines = inputFile.readlines()
 
         for counterLine in range(inputFileLines.__len__()):
@@ -239,7 +254,7 @@ for counter in range(inputFileList.__len__()):
 
         inputFile.close()
     except:
-        print("ERROR: Could not open file:", inputFileList[counter])
+        print("ERROR: Could not open file:", inputFileList[inputFileCounter])
         print("-> Check if the selected file exists")
 
 print("INFO: Program successfully executed")

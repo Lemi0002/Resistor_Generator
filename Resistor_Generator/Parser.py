@@ -6,15 +6,15 @@ class Parser:
     stringDelimiter = ""
     stringEnd = ""
     argumentFlags = []
-    emptyArgumentIgnore = False
+    argumentEmptyIgnore = False
 
 
-    def __init__(self, stringStart: str = "", stringDelimiter: str = "", stringEnd: str = "", argumentFlags: list = [], emptyArgumentIgnore: bool = False) -> None:
+    def __init__(self, stringStart: str = "", stringDelimiter: str = "", stringEnd: str = "", argumentFlags: list = [], argumentEmptyIgnore: bool = False) -> None:
         self.stringStart = stringStart
         self.stringDelimiter = stringDelimiter
         self.stringEnd = stringEnd
         self.argumentFlags = argumentFlags
-        self.emptyArgumentIgnore = emptyArgumentIgnore
+        self.argumentEmptyIgnore = argumentEmptyIgnore
 
 
     def stringParse(self, string: str, errorEnabled: bool) -> bool:
@@ -117,7 +117,7 @@ class Parser:
             arguments.append(string[indexStart + self.stringStart.__len__() : indexEnd])
 
         # Remove empty arguments if the option is set
-        if self.emptyArgumentIgnore == True:
+        if self.argumentEmptyIgnore == True:
             for counter in range(arguments.__len__() - 1, -1, -1):
                 if arguments[counter] == "":
                     arguments.pop(counter)

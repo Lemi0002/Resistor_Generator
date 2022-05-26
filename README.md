@@ -44,7 +44,60 @@ Resistor color coding which is used by this generator:
 
 ![Resistor color code](Resources/Drawables/Resistor_Color_Code.PNG)
 
-## Command protocol
+## Available console arguments
+Following arguments can be passed to the script:
+
+| Name                       | Parameters | Parameter description       |
+|:---------------------------|:-----------|:----------------------------|
+| --input, -i                | 1          | Input file                  |
+| --outputPathAbsolute, -opa | 1          | Absolute path of the output |
+| --help                     | 0          |                             |
+
+### --input, -i
+Specifies the file which shall be pared. This command can also be called
+multiple times with different files.
+
+Spaces within the given paths are not supported.
+
+Parameters:
+
+    P1: Path [string]
+
+Example:
+
+    -i Z:\Resistor_Generator\Test\Test1.md -i Z:\Resistor_Generator\Test\Test2.md
+
+### --outputPathAbsolute, -opa
+Specifies the absolute output path. If this path is set the output of all input
+files is saved to the same location. Relative output path commands within the
+input files will have no effect.
+
+Spaces within the given paths are not supported.
+
+Parameters:
+
+    P1: Path [string]
+
+Example:
+
+    -opa Z:\Resistor_Generator\Test
+
+### --help
+If this arguments is set, a table with all available console arguments and file
+commands will be printed to the console.
+
+Parameters:
+
+    None
+
+Example:
+
+    --help
+
+## File command protocol
+File commands refer to certain strings within any text file that is passed to
+the python script by console arguments.
+
 With the help of these available commands, the result of the output PNG can be
 modified to any extent. There are default values set for every parameter that
 can be modified. If the user wishes to modify any of these values one can do so
@@ -63,20 +116,20 @@ Indication characters:
     Character end: "_"
     Character deliminator: ";"
 
-Command templates:
+File command templates:
 
     _RG_<Name>;<P1>_
     _RG_<Name>;<P1>;<P2>_
     _RG_<Name>;<P1>;<P2>;<P3>_
 
 
-## Available commands
-These are the available commands:
+## Available file commands
+These are the available file commands:
 
 | Name                  | Parameters | Parameter description            |
 |:----------------------|:-----------|:---------------------------------|
 | Specification         | 2          | Value, Tolerance                 |
-| OutputPath            | 1          | Path of the output               |
+| OutputPathRelative    | 1          | Relative path of the output      |
 | ImageSize             | 2          | Width, Height                    |
 | BodyPosition          | 2          | X, Y                             |
 | BodySize              | 2          | Width, Height                    |
@@ -108,20 +161,21 @@ Example:
 
     _RG_Specification;4700;1_
 
-### OutputPath
-Specifies the location of the PNG output. If no location is specified an
-"Output" directory at the input file location will be generated. If one is
-specified the output path will be relative to the input file location.
+### OutputPathRelative
+Specifies the relative location of the PNG output based on the path of the input
+file where the specification command was found. This command will only have an
+effect if no absolute output path was set by the command line arguments.
 
-Please note that the output path must be entered in quotation marks.
+If no relative location is specified, the output will be saved to the directory
+of the input file.
 
 Parameters:
 
-    P1: Output [string]
+    P1: Path [string]
 
 Example:
 
-    _RG_OutputPath;"Drawables/Output"_
+    _RG_OutputPathRelative;Output/Pictures_
 
 ### ImageSize
 Specifies the image size of the output in pixel dimensions.

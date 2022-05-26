@@ -1,14 +1,4 @@
-_RG_ImageSize;150;80_
-_RG_OutputPathRelative;OutputTest2_
-_RG_BodyPosition;35;20_
-_RG_BodySize;80;40_
-_RG_BodyColor;130;130;50_
-_RG_LegSize;20;50_
-_RG_LegColor;90;90;90_
-_RG_CodeBarCount;4_
-_RG_CodeBarClearanceSide;4_
-_RG_CodeBarClearance;6_
-_RG_BackgroundColor;193;225;236_
+_RG_OutputPathRelative;OutputTest1_
 
 _RG_Specification;1;10_
 _RG_Specification;20;10_
